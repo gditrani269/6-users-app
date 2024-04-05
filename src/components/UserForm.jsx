@@ -21,8 +21,20 @@ export const UserForm = () => {
         })
     }
 
+    const onSubmit = (event) => {
+        event.preventDefault ();
+        //vamos a validar que los campos del form no esten vacios
+        if (!username || !password || !email) {
+            alert ('Debe completar todos los campos del formularios')
+            return;
+        }
+        console.log (userForm)
+        //guardar el userForm en el listado de usuarios, o sea limpia el formulario
+        setUserForm (initialUserForm);
+    }
+
     return (
-        <form>
+        <form onSubmit ={ onSubmit }>
             <input
                 className="form-control my-3 w-75"
                 placeholder="username"

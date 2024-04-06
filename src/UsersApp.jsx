@@ -13,6 +13,7 @@ const initialUsers = [
 ];
 
 const initialUserForm = {
+    id: 0,
     username: '',
     password: '',
     email: ''
@@ -30,8 +31,15 @@ export const UsersApp = () => {
     //el objeto recibido user es el que nos pasa el formulario con los datos agregados
     const handlerAddUser = (user) => {
         //console.log (user);
+        //si el campo id del user es 0, se trata de un usuario nuevo, si es distinto de 0 entonces se trata de un update de la infodel usuario
+        let type;
+        if (user.id === 0) {
+            type= 'addUser'
+        } else {
+            type = 'updateUser'
+        }
         dispatch ({
-            type: 'addUser',
+            type: type,
             payload: user,
         })
     }

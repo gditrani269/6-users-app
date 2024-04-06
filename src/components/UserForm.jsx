@@ -4,7 +4,7 @@ export const UserForm = ( { userSelected, handlerAddUser, initialUserForm }) => 
 
     const [userForm, setUserForm ] = useState (initialUserForm);
 
-    const { username, password, email } = userForm;
+    const { id, username, password, email } = userForm;
 
     //este useEffect se dispara cuando se llama al UserRow y viene un cambio en el objeto userSelected
     useEffect (() => {
@@ -57,10 +57,14 @@ export const UserForm = ( { userSelected, handlerAddUser, initialUserForm }) => 
                 name="email"
                 value={email}
                 onChange={ onInputChange }/>
+            <input type="hidden"
+                name="id"
+                value={id} />
             <button
                 className="btn btn-primary"
                 type="submit">
-                Crear
+                {/* Si el id es 0 el label del boton es Crear, si el id es mayor a cero, se trata de un update, entonces el label del boton es Editar */}
+                { id > 0?  'Editar' : 'Crear'}
             </button>
         </form>
     );

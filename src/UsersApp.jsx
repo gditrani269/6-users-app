@@ -12,6 +12,12 @@ const initialUsers = [
     },
 ];
 
+const initialUserForm = {
+    username: '',
+    password: '',
+    email: ''
+}
+
 export const UsersApp = () => {
 
     //en la constante users vamos a guardar la lista de usuarios y la modificamos por medio de dispatch
@@ -38,12 +44,17 @@ export const UsersApp = () => {
             <h2>Users App</h2>
             <div className="row">
                 <div className="col">
-                    <UserForm handlerAddUser={ handlerAddUser }/>
+                    <UserForm 
+                        initialUserForm={ initialUserForm }
+                        handlerAddUser={ handlerAddUser }/>
                 </div>
                 <div className="col">
-                    <UsersList 
+                    {/*verifica si hay usuario que mostrar*/}
+                    { users.length === 0
+                        ? <div className="alert alert-warning">No hay usuarios ne el sistema!</div>
+                    : <UsersList 
                         handlerRemoveUser={ handlerRemoveUser }
-                        users={ users }/>
+                        users={ users }/>}
                 </div>
             </div>
         </div>

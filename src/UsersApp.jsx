@@ -1,5 +1,7 @@
+import { useReducer } from "react";
 import { UserForm } from "./components/UserForm";
 import { UsersList } from "./components/UsersList";
+import { usersReducers } from "./reducers/usersReducers";
 
 const initialUsers = [
     {
@@ -12,8 +14,16 @@ const initialUsers = [
 
 export const UsersApp = () => {
 
+    //en la constante users vamos a guardar la lista de usuarios y la modificamos por medio de dispatch
+    const [users, dispatch] = useReducer (usersReducers, initialUsers);
+
+    //el objeto recibido user es el que nos pasa el formulario con los datos agregados
     const handlerAddUser = (user) => {
-        console.log (user);
+        //console.log (user);
+        dispatch ({
+            type: 'addUser',
+            payload: user,
+        })
     }
     return (
         <div className="container my-4">
@@ -24,7 +34,7 @@ export const UsersApp = () => {
                 </div>
                 <div className="col">
                     <UsersList 
-                        users={ initialUsers }/>
+                        users={ users }/>
                 </div>
             </div>
         </div>

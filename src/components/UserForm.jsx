@@ -6,7 +6,7 @@ const initialUserForm = {
     email: ''
 }
 
-export const UserForm = () => {
+export const UserForm = ( { handlerAddUser }) => {
 
     const [userForm, setUserForm ] = useState (initialUserForm);
 
@@ -28,8 +28,9 @@ export const UserForm = () => {
             alert ('Debe completar todos los campos del formularios')
             return;
         }
-        console.log (userForm)
+        //console.log (userForm)
         //guardar el userForm en el listado de usuarios, o sea limpia el formulario
+        handlerAddUser (userForm);
         setUserForm (initialUserForm);
     }
 

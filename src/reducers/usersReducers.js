@@ -15,7 +15,10 @@ export const usersReducers = ( state = [], action) => {
             return state.map ( u => {
                 if (u.id === action.payload.id) {
                     return {
-                        ...action.payload
+                        //en el caso de update modificamos todos los datos del usuario salvo el password.
+                        //ese dato lo mantenemos
+                        ...action.payload,
+                        password: u.password
                     };
                 }
                 return u;

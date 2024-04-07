@@ -10,7 +10,7 @@ export const UserForm = ( { userSelected, handlerAddUser, initialUserForm }) => 
     useEffect (() => {
         setUserForm ({
             ...userSelected,
-            //password: '',
+            password: '',
         })
     }, [userSelected])
     
@@ -25,8 +25,8 @@ export const UserForm = ( { userSelected, handlerAddUser, initialUserForm }) => 
 
     const onSubmit = (event) => {
         event.preventDefault ();
-        //vamos a validar que los campos del form no esten vacios
-        if (!username || !password || !email) {
+        //vamos a validar que los campos del form no esten vacios y hace un tratamiento especial para el caso del campo password, para el caso que se trate de un update, en ese caso no tiene en cuenta el cmapo pasword
+        if (!username || (!password && id === 0) || !email) {
             alert ('Debe completar todos los campos del formularios')
             return;
         }
@@ -44,13 +44,15 @@ export const UserForm = ( { userSelected, handlerAddUser, initialUserForm }) => 
                 name="username"
                 value= {username}
                 onChange={ onInputChange } />
-            <input
+            {/*solo muestra el campo password para el caso de nuevos usuarios, o sea id = 0 */}
+            { id > 0?  '' : <input
                 className="form-control my-3 w-75"
                 placeholder="password"
                 type="password"
                 name="password"
                 value={password}
-                onChange={ onInputChange } />
+                onChange={ onInputChange } />}
+            
             <input
                 className="form-control my-3 w-75"
                 placeholder="email" 

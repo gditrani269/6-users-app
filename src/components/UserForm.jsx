@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import Swal from "sweetalert2";
 
 export const UserForm = ( { userSelected, handlerAddUser, initialUserForm }) => {
 
@@ -27,7 +28,12 @@ export const UserForm = ( { userSelected, handlerAddUser, initialUserForm }) => 
         event.preventDefault ();
         //vamos a validar que los campos del form no esten vacios y hace un tratamiento especial para el caso del campo password, para el caso que se trate de un update, en ese caso no tiene en cuenta el cmapo pasword
         if (!username || (!password && id === 0) || !email) {
-            alert ('Debe completar todos los campos del formularios')
+            Swal.fire({
+                title: "Error de validacion",
+                text: "Debe completar todos los campos del formularios",
+                icon: "error"
+            });
+
             return;
         }
         //console.log (userForm)

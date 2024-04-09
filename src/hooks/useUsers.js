@@ -25,16 +25,20 @@ export const useUsers = () => {
     //uso el userSelected para editar los datos del usuario seleccionado que quiero modificar
     const [userSelected, setUserSelected] = useState (initialUserForm);
 
+    //definicmos una nueva variable de estado para manejar si el formulario se debe mostrar o no
+    const [visibleForm, setVisibleForm ] = useState (false);
     //el objeto recibido user es el que nos pasa el formulario con los datos agregados
     const handlerAddUser = (user) => {
         //console.log (user);
         //si el campo id del user es 0, se trata de un usuario nuevo, si es distinto de 0 entonces se trata de un update de la infodel usuario
-        let type;
+        /*let type;
         if (user.id === 0) {
             type= 'addUser'
         } else {
             type = 'updateUser'
-        }
+        }*/ // este if se puede hacer con operador ternario y uedari del siguietne modo
+        const type = (user.id === 0) ? 'addUser' : 'updateUser';
+
         dispatch ({
             type: type,
             payload: user,
@@ -47,6 +51,9 @@ export const useUsers = () => {
             'El usuario ha sido creado con exito': 'El usuario ha sido  actualizado con exito',
             'success'
         );
+        //manejo la visibilidad del formuario
+        setVisibleForm (false);
+        setUserSelected (initialUserForm);
     }
 
     const handlerRemoveUser = (id) => {
@@ -78,15 +85,29 @@ export const useUsers = () => {
     const handlerUserSelectedForm = (user) => {
         //console.log (user);
         setUserSelected ({...user });
+        setVisibleForm (true);
     }
+
+    const handlerOpenForm = () => {
+        setVisibleForm (true);
+    }
+
+    const handlerCloseForm = () => {
+        setVisibleForm (false);
+        setUserSelected (initialUserForm);
+    }
+
 
     return {
         users,
         userSelected,
         initialUserForm,
+        visibleForm,
 
         handlerAddUser,
         handlerRemoveUser,
         handlerUserSelectedForm,
+        handlerOpenForm,
+        handlerCloseForm,
     }
 }

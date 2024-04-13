@@ -3,6 +3,8 @@ import { LoginPage } from "./auth/pages/LoginPage";
 import { UsersPage } from "./pages/UsersPage";
 import { loginReducer } from './auth/reducers/loginReducer';
 import Swal from 'sweetalert2';
+import { NavBar } from './layout/NavBar';
+
 
 //si estamos autenticados va a cargar la UserPage
 //si NO estamos autenticados va a cargar la pagin LoginPage
@@ -30,11 +32,23 @@ export const UsersApp = () => {
         }
     }
 
+    const handlerLogout = () => {
+        dispatch ({
+            type: 'logout',
+        });    
+        sessionStorage.removeItem ('login');
+    }
+
     return (
         <>
             {
             login.isAuth
-                ? <UsersPage />
+                ? (
+                    <>
+                        <NavBar login={ login } handlerLogout={ handlerLogout }/>
+                        <UsersPage />
+                    </>
+                )
                 : <LoginPage handlerLogin={ handlerLogin }/>
             }
             {/*<UsersPage />*/}

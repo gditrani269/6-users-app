@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 //si estamos autenticados va a cargar la UserPage
 //si NO estamos autenticados va a cargar la pagin LoginPage
-const initialLogin = {
+const initialLogin = JSON.parse (sessionStorage.getItem ('login')) || {
     isAuth: false,
     user: undefined,
 }
@@ -20,7 +20,11 @@ export const UsersApp = () => {
             dispatch ({
                 type: 'login',
                 payload: user,
-            })
+            });
+            sessionStorage.setItem ('login', JSON.stringify ({
+                isAuth: true,
+                user: user,
+            }));
         } else {
             Swal.fire ('Error login', 'Username y/o ppasword invalidos', 'error');
         }

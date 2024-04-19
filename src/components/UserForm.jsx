@@ -80,12 +80,15 @@ export const UserForm = ( { userSelected, handlerAddUser, initialUserForm, handl
                 {/* Si el id es 0 el label del boton es Crear, si el id es mayor a cero, se trata de un update, entonces el label del boton es Editar */}
                 { id > 0?  'Editar' : 'Crear'}
             </button>
+
+            {/* verifica si hay funcion handlerCloseForm para ver si muestra o no el boton cerrar*/}
+            {!handlerCloseForm || 
             <button
                 className="btn btn-primary mx-2"
                 type="button"
                 onClick={() => onCloseForm()}>
                 Cerrar
-            </button>
+            </button>}
         </form>
     );
 }

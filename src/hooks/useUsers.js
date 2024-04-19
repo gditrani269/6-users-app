@@ -1,6 +1,7 @@
 import { usersReducers } from "../reducers/usersReducers";
 import Swal from "sweetalert2";
 import { useState, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 const initialUsers = [
     {
@@ -27,6 +28,8 @@ export const useUsers = () => {
 
     //definicmos una nueva variable de estado para manejar si el formulario se debe mostrar o no
     const [visibleForm, setVisibleForm ] = useState (false);
+    const navigate = useNavigate ();
+
     //el objeto recibido user es el que nos pasa el formulario con los datos agregados
     const handlerAddUser = (user) => {
         //console.log (user);
@@ -54,6 +57,7 @@ export const useUsers = () => {
         //manejo la visibilidad del formuario
         setVisibleForm (false);
         setUserSelected (initialUserForm);
+        navigate ('/users');
     }
 
     const handlerRemoveUser = (id) => {

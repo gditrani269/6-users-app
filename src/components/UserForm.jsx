@@ -36,6 +36,15 @@ export const UserForm = ( { userSelected, handlerAddUser, initialUserForm, handl
 
             return;
         }
+        //verifica que el email tenga formato de email con el @
+        if (!email.includes ('@')) {
+            Swal.fire({
+                title: "Error de validacion del email",
+                text: "El email debe ser valido, incluir un @!",
+                icon: "error"
+            });      
+            return;      
+        }
         //console.log (userForm)
         //guardar el userForm en el listado de usuarios, o sea limpia el formulario
         handlerAddUser (userForm);

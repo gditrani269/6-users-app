@@ -10,8 +10,10 @@ export const RegisterPage = ({ users=[], handlerAddUser, initialUserForm }) => {
     useEffect (() => {
         //cuando [id] cambia se dispara el useEffect, busca el usuario segun el id, si lo encuentra se lo pasa al useUserSelected, si no lo encuentra usa initialUserForm
         console.log (id);
-        const user = users.find (u => u.id == id) || initialUserForm;
-        setUserSelected (user);
+        if (id) {
+            const user = users.find (u => u.id == id) || initialUserForm;
+            setUserSelected (user);
+        }
     }, [id])
 
     return (

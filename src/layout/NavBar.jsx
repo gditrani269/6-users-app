@@ -17,11 +17,7 @@ export const NavBar = ({ login, handlerLogout }) => {
                             Usuarios
                         </NavLink>
                     </li>
-                </ul>
-            </div>
 
-            <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav">
                     <li className="nav-item">
                         <NavLink className="nav-link" to="/users/register">
                             Registrar Usuario
@@ -31,7 +27,7 @@ export const NavBar = ({ login, handlerLogout }) => {
             </div>
 
 
-            <div className="collapse navbar-collapse justify-content-end" id="navbarNavLogout">
+            <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <span className="nav-item nav-link text-primary mx-3">
                     { login.user?.username }
                 </span>

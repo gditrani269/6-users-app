@@ -10,8 +10,6 @@ export const UsersPage = () => {
         users,
         visibleForm,
         
-        handlerRemoveUser,
-        handlerUserSelectedForm,
         handlerOpenForm,
     } = useContext (UserContext);
 
@@ -36,10 +34,7 @@ export const UsersPage = () => {
                         {/*verifica si hay usuario que mostrar*/}
                         { users.length === 0
                             ? <div className="alert alert-warning">No hay usuarios ne el sistema!</div>
-                            : <UsersList 
-                                handlerUserSelectedForm= { handlerUserSelectedForm }
-                                handlerRemoveUser={ handlerRemoveUser }
-                                users={ users }/>}
+                            : <UsersList />}
                     </div>
                 </div>
             </div>

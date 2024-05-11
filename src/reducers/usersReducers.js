@@ -7,7 +7,8 @@ export const usersReducers = ( state = [], action) => {
                 ...state,
                 {
                     ...action.payload,
-                    id: new Date().getTime(),
+                    //se quita el id ya que ahora lo maneja la base de datos
+                    //id: new Date().getTime(),
                 }
             ];
 

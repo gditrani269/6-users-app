@@ -29,4 +29,9 @@ https://es.react.dev/learn/scaling-up-with-reducer-and-context
 https://es.react.dev/reference/react/createContext
 https://es.react.dev/reference/react/useContext
 
+Instalar Axios:
+https://axios-http.com/docs/intro
+
+npm install axios
+
 

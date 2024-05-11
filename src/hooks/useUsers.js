@@ -2,15 +2,9 @@ import { usersReducers } from "../reducers/usersReducers";
 import Swal from "sweetalert2";
 import { useState, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import { findAll } from "../services/userService";
 
-const initialUsers = [
-    {
-        id: 1,
-        username: 'pepe',
-        password: '12345',
-        email: 'pepe@correo.com'
-    },
-];
+const initialUsers = [];
 
 const initialUserForm = {
     id: 0,
@@ -30,6 +24,14 @@ export const useUsers = () => {
     const [visibleForm, setVisibleForm ] = useState (false);
     const navigate = useNavigate ();
 
+    const getUsers = async () => {
+        const result = await findAll ();
+        console.log(result);
+        dispatch ({
+            type: 'loadingUsers',
+            payload: result.data,
+        });
+    }
     //el objeto recibido user es el que nos pasa el formulario con los datos agregados
     const handlerAddUser = (user) => {
         //console.log (user);
@@ -113,5 +115,6 @@ export const useUsers = () => {
         handlerUserSelectedForm,
         handlerOpenForm,
         handlerCloseForm,
+        getUsers,
     }
 }

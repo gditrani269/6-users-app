@@ -2,7 +2,7 @@ import { usersReducers } from "../reducers/usersReducers";
 import Swal from "sweetalert2";
 import { useState, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
-import { findAll } from "../services/userService";
+import { findAll, remove, save, update } from "../services/userService";
 
 const initialUsers = [];
 
@@ -33,7 +33,7 @@ export const useUsers = () => {
         });
     }
     //el objeto recibido user es el que nos pasa el formulario con los datos agregados
-    const handlerAddUser = (user) => {
+    const handlerAddUser = async (user) => {
         //console.log (user);
         //si el campo id del user es 0, se trata de un usuario nuevo, si es distinto de 0 entonces se trata de un update de la infodel usuario
         /*let type;
@@ -42,12 +42,18 @@ export const useUsers = () => {
         } else {
             type = 'updateUser'
         }*/ // este if se puede hacer con operador ternario y uedari del siguietne modo
-        const type = (user.id === 0) ? 'addUser' : 'updateUser';
+
+        let response;
+        if (user.id === 0) {
+            response = await save(user);
+        } else {
+            response = await update(user);
+        }
 
         dispatch ({
-            type: type,
-            payload: user,
-        })
+            type: (user.id === 0) ? 'addUser' : 'updateUser',
+            payload: response.data,
+        });
 
         Swal.fire(
             (user.id === 0) ? 
@@ -74,6 +80,7 @@ export const useUsers = () => {
             confirmButtonText: "si eliminar"
           }).then((result) => {
             if (result.isConfirmed) {
+                remove(id); //esta llamdada no necesita ser asincrona con await dado que no necesitamso que nos responda, asi que podemos seguir sin esperar
                 dispatch ({
                     type: 'removeUser',
                     payload: id,

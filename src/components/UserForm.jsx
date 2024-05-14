@@ -51,7 +51,6 @@ export const UserForm = ( { userSelected, handlerCloseForm }) => {
         //console.log (userForm)
         //guardar el userForm en el listado de usuarios, o sea limpia el formulario
         handlerAddUser (userForm);
-        setUserForm (initialUserForm);
     }
 
     const onCloseForm = () => {
@@ -68,6 +67,7 @@ export const UserForm = ( { userSelected, handlerCloseForm }) => {
                 name="username"
                 value= {username}
                 onChange={ onInputChange } />
+            <p className="text-danger">{ errors?.username}</p>
             {/*solo muestra el campo password para el caso de nuevos usuarios, o sea id = 0 */}
             { id > 0?  '' : <input
                 className="form-control my-3 w-75"
@@ -76,6 +76,7 @@ export const UserForm = ( { userSelected, handlerCloseForm }) => {
                 name="password"
                 value={password}
                 onChange={ onInputChange } />}
+            <p className="text-danger">{ errors?.password}</p>
             
             <input
                 className="form-control my-3 w-75"
@@ -83,6 +84,7 @@ export const UserForm = ( { userSelected, handlerCloseForm }) => {
                 name="email"
                 value={email}
                 onChange={ onInputChange }/>
+            <p className="text-danger">{ errors?.email}</p>
             <input type="hidden"
                 name="id"
                 value={id} />

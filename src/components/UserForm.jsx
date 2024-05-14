@@ -4,7 +4,7 @@ import { UserContext } from "../context/UserContext";
 
 export const UserForm = ( { userSelected, handlerCloseForm }) => {
 
-    const { initialUserForm, handlerAddUser } = useContext (UserContext);
+    const { initialUserForm, handlerAddUser, errors } = useContext (UserContext);
 
     const [userForm, setUserForm ] = useState (initialUserForm);
 
@@ -30,7 +30,7 @@ export const UserForm = ( { userSelected, handlerCloseForm }) => {
     const onSubmit = (event) => {
         event.preventDefault ();
         //vamos a validar que los campos del form no esten vacios y hace un tratamiento especial para el caso del campo password, para el caso que se trate de un update, en ese caso no tiene en cuenta el cmapo pasword
-        if (!username || (!password && id === 0) || !email) {
+/*        if (!username || (!password && id === 0) || !email) {
             Swal.fire({
                 title: "Error de validacion",
                 text: "Debe completar todos los campos del formularios",
@@ -47,7 +47,7 @@ export const UserForm = ( { userSelected, handlerCloseForm }) => {
                 icon: "error"
             });      
             return;      
-        }
+        }*/
         //console.log (userForm)
         //guardar el userForm en el listado de usuarios, o sea limpia el formulario
         handlerAddUser (userForm);

@@ -13,6 +13,11 @@ const initialUserForm = {
     email: ''
 }
 
+const initialErrors = {
+    username: '',
+    password: '',
+    email: ''
+}
 export const useUsers = () => {
     //en la constante users vamos a guardar la lista de usuarios y la modificamos por medio de dispatch
     const [users, dispatch] = useReducer (usersReducers, initialUsers);
@@ -22,6 +27,8 @@ export const useUsers = () => {
 
     //definicmos una nueva variable de estado para manejar si el formulario se debe mostrar o no
     const [visibleForm, setVisibleForm ] = useState (false);
+
+    const [errors, setErrors] = useState ({initialErrors});
     const navigate = useNavigate ();
 
     const getUsers = async () => {
@@ -44,28 +51,36 @@ export const useUsers = () => {
         }*/ // este if se puede hacer con operador ternario y uedari del siguietne modo
 
         let response;
-        if (user.id === 0) {
-            response = await save(user);
-        } else {
-            response = await update(user);
+        try {
+            if (user.id === 0) {
+                response = await save(user);
+            } else {
+                response = await update(user);
+            }
+
+            dispatch ({
+                type: (user.id === 0) ? 'addUser' : 'updateUser',
+                payload: response.data,
+            });
+
+            Swal.fire(
+                (user.id === 0) ? 
+                'Usuario creado': 'Usuario actualizado',
+                (user.id === 0) ? 
+                'El usuario ha sido creado con exito': 'El usuario ha sido  actualizado con exito',
+                'success'
+            );
+            //manejo la visibilidad del formuario
+            setVisibleForm (false);
+            setUserSelected (initialUserForm);
+            navigate ('/users');
+        } catch (error) {
+            if (error.response && error.response.status == 400) {
+                setErrors (error.response.data);
+            } else {
+                throw error;
+            }
         }
-
-        dispatch ({
-            type: (user.id === 0) ? 'addUser' : 'updateUser',
-            payload: response.data,
-        });
-
-        Swal.fire(
-            (user.id === 0) ? 
-            'Usuario creado': 'Usuario actualizado',
-            (user.id === 0) ? 
-            'El usuario ha sido creado con exito': 'El usuario ha sido  actualizado con exito',
-            'success'
-        );
-        //manejo la visibilidad del formuario
-        setVisibleForm (false);
-        setUserSelected (initialUserForm);
-        navigate ('/users');
     }
 
     const handlerRemoveUser = (id) => {
@@ -116,6 +131,7 @@ export const useUsers = () => {
         userSelected,
         initialUserForm,
         visibleForm,
+        errors,
 
         handlerAddUser,
         handlerRemoveUser,

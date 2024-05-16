@@ -34,4 +34,12 @@ https://axios-http.com/docs/intro
 
 npm install axios
 
+para la seccion 15- clase 189 es necesario renombrar las unique key de la tabla users, de la siguiente manera, primero obtenemos los nombres de los indices con:
+show index in users;
+ahora renombrando los indices de las columnas email y username con los comandos (suponiendo que los indices se llamen asi):
+	alter table users rename index UK_r43af9ap4edm43mmtq01oddj6 to UK_username;
+	alter table users rename index UK_6dotkott2kjsp8vw4d0m25fb7 to UK_email;
+
+
+
 

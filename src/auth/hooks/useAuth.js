@@ -14,10 +14,12 @@ export const useAuth = ()  => {
     const [login, dispatch] = useReducer (loginReducer, initialLogin);
     const navigate = useNavigate ();
 
-    const handlerLogin = ({username, password}) => {
-        const isLogin = loginUser ({username, password});
-        if  (isLogin) {
-            const user = { username: 'admin'}
+    const handlerLogin = async ({username, password}) => {
+        
+        try {
+            const response = await loginUser ({username, password});
+            const token = response.data.token;
+            const user = { username: response.data.username}
             dispatch ({
                 type: 'login',
                 payload: user,
@@ -28,7 +30,7 @@ export const useAuth = ()  => {
             }));
             //despues de logearse y guardar sesion, navega a la pagina usuarios
             navigate ('/users');
-        } else {
+        } catch (error) {
             Swal.fire ('Error login', 'Username y/o ppasword invalidos', 'error');
         }
     }

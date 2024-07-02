@@ -1,11 +1,13 @@
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { UserRow } from "./UserRow";
+import { AuthContext } from "../auth/context/AuthContext";
 
 export const UsersList = () => {
 
     const { users } = useContext (UserContext);
-
+    //para obtener el contexto del login
+    const { login } = useContext(AuthContext);
     return (
         <>
             <table className="table table-hover table-striped">
@@ -14,9 +16,12 @@ export const UsersList = () => {
                         <th>#</th>
                         <th>username</th>
                         <th>email</th>
-                        <th>update</th>
-                        <th>update route</th>
-                        <th>remove</th>
+                        {!login.isAdmin || <>
+                                <th>update</th>
+                                <th>update route</th>
+                                <th>remove</th>
+                            </>
+                        }
                     </tr>
                 </thead>
                 <tbody>

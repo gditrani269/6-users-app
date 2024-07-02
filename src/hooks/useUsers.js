@@ -1,8 +1,9 @@
 import { usersReducers } from "../reducers/usersReducers";
 import Swal from "sweetalert2";
-import { useState, useReducer } from "react";
+import { useState, useReducer, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { findAll, remove, save, update } from "../services/userService";
+import { AuthContext } from "../auth/context/AuthContext";
 
 const initialUsers = [];
 
@@ -30,6 +31,7 @@ export const useUsers = () => {
 
     const [errors, setErrors] = useState ({initialErrors});
     const navigate = useNavigate ();
+    const { login } = useContext(AuthContext);
 
     const getUsers = async () => {
         const result = await findAll ();
@@ -50,6 +52,8 @@ export const useUsers = () => {
             type = 'updateUser'
         }*/ // este if se puede hacer con operador ternario y uedari del siguietne modo
 
+        //validamos si es admin
+        if (!login.isAdmin) return;
         let response;
         try {
             if (user.id === 0) {
@@ -93,6 +97,9 @@ export const useUsers = () => {
 
     const handlerRemoveUser = (id) => {
         //console.log (id);
+        //validamos si es admin
+        if (!login.isAdmin) return;
+
         Swal.fire({
             title: "esta seguro que desea eliminar?",
             text: "cuidado el usuario sera eliminado",

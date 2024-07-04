@@ -51,5 +51,6 @@ export const remove = async (id) => {
         await axios.delete (`${BASE_URL}/${id}`, config());
     } catch (error) {
         console.error (error);
+        throw error;
     }
 }

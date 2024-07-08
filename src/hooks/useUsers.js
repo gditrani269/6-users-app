@@ -35,12 +35,19 @@ export const useUsers = () => {
     const { login, handlerLogout } = useContext(AuthContext);
 
     const getUsers = async () => {
-        const result = await findAll ();
-        console.log(result);
-        dispatch ({
-            type: 'loadingUsers',
-            payload: result.data,
-        });
+        try {
+                const result = await findAll ();
+                console.log(result);
+                dispatch ({
+                    type: 'loadingUsers',
+                    payload: result.data,
+                });
+        } catch (error) {
+            if (error.response?.status == 401) {
+                handlerLogout ();
+            }
+        }
+
     }
     //el objeto recibido user es el que nos pasa el formulario con los datos agregados
     const handlerAddUser = async (user) => {

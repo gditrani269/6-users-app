@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 import { UserContext } from "../context/UserContext"
 import { AuthContext } from "../auth/context/AuthContext";
 
-export const UserRow = ({ id, username, email}) => {
+export const UserRow = ({ id, username, email, admin}) => {
     //para obtener el contexto del login
     const { login } = useContext(AuthContext);    
     const { handlerUserSelectedForm, handlerRemoveUser } = useContext (UserContext);
@@ -21,6 +21,7 @@ export const UserRow = ({ id, username, email}) => {
                         id: id,
                         username: username,
                         email: email,
+                        admin: admin,
                     })}>
                     update
                 </button>

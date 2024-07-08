@@ -8,7 +8,9 @@ export const UserForm = ( { userSelected, handlerCloseForm }) => {
 
     const [userForm, setUserForm ] = useState (initialUserForm);
 
-    const { id, username, password, email } = userForm;
+    const [checked, setChecked] = useState (userForm.admin)
+
+    const { id, username, password, email, admin } = userForm;
 
     //este useEffect se dispara cuando se llama al UserRow y viene un cambio en el objeto userSelected
     useEffect (() => {
@@ -24,6 +26,15 @@ export const UserForm = ( { userSelected, handlerCloseForm }) => {
         setUserForm ({
             ...userForm,
             [name]: value,
+        })
+    }
+
+    const onChekboxChange = () => {
+        //invierte el estado del check
+        setChecked (!checked);
+        setUserForm({
+            ...userForm,
+            admin: checked,
         })
     }
 
@@ -85,6 +96,17 @@ export const UserForm = ( { userSelected, handlerCloseForm }) => {
                 value={email}
                 onChange={ onInputChange }/>
             <p className="text-danger">{ errors?.email}</p>
+
+            <div className="my-3 form-check">
+                <input type="checkbox"
+                    name="admin"
+                    checked={admin}
+                    className="form-check-input"
+                    onChange={onChekboxChange}
+                />
+                <label className="form-check-label">Admin</label>
+            </div>
+
             <input type="hidden"
                 name="id"
                 value={id} />

@@ -4,6 +4,8 @@ import { useState, useReducer, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { findAll, remove, save, update } from "../services/userService";
 import { AuthContext } from "../auth/context/AuthContext";
+import { useDispatch } from "react-redux";
+import { addUser, removeUser, updateUser, loadingUsers, } from "../store/slices/users/usersSlice";
 
 const initialUsers = [];
 
@@ -22,7 +24,10 @@ const initialErrors = {
 }
 export const useUsers = () => {
     //en la constante users vamos a guardar la lista de usuarios y la modificamos por medio de dispatch
-    const [users, dispatch] = useReducer (usersReducers, initialUsers);
+    //comentamos porque lo llevamos al usersSlice
+    //const [users, dispatch] = useReducer (usersReducers, initialUsers);
+    const {users} = useSelector(state => state.users);
+    const dispatch = useDispatch();
 
     //uso el userSelected para editar los datos del usuario seleccionado que quiero modificar
     const [userSelected, setUserSelected] = useState (initialUserForm);
@@ -38,10 +43,7 @@ export const useUsers = () => {
         try {
                 const result = await findAll ();
                 console.log(result);
-                dispatch ({
-                    type: 'loadingUsers',
-                    payload: result.data,
-                });
+                dispatch ( loadingUsers (result.data));
         } catch (error) {
             if (error.response?.status == 401) {
                 handlerLogout ();
@@ -66,14 +68,11 @@ export const useUsers = () => {
         try {
             if (user.id === 0) {
                 response = await save(user);
+                dispatch (addUser (response.data))
             } else {
                 response = await update(user);
+                dispatch (updateUser(response.data));
             }
-
-            dispatch ({
-                type: (user.id === 0) ? 'addUser' : 'updateUser',
-                payload: response.data,
-            });
 
             Swal.fire(
                 (user.id === 0) ? 
@@ -122,10 +121,8 @@ export const useUsers = () => {
             if (result.isConfirmed) {
                 try {
                     await remove(id); //esta llamdada no necesita ser asincrona con await dado que no necesitamso que nos responda, asi que podemos seguir sin esperar
-                    dispatch ({
-                        type: 'removeUser',
-                        payload: id,
-                    })
+                    dispatch(removeUser(id));
+
                     Swal.fire({
                         title: "Usuario Eliminado!",
                         text: "El usuario ha sido eliminado con exito",

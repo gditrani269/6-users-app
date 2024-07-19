@@ -40,6 +40,23 @@ ahora renombrando los indices de las columnas email y username con los comandos 
 	alter table users rename index UK_r43af9ap4edm43mmtq01oddj6 to UK_username;
 	alter table users rename index UK_6dotkott2kjsp8vw4d0m25fb7 to UK_email;
 
+------------------------------------------------
 
+clase 247
+REDUX
+https://redux-toolkit.js.org/introduction/getting-started
+
+para agregar a una aplicacion existente
+instalar el redux toolkit
+npm install @reduxjs/toolkit
+
+onstalar el redux para react
+npm install react-redux
+
+para crear una app desde cero
+npx create-next-app --example with-redux my-app
+
+En el navegador agregar el complemento: Redux devTools
+----------------------------------------------
 
 

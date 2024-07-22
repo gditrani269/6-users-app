@@ -5,37 +5,21 @@ import { useNavigate } from "react-router-dom";
 import { findAll, remove, save, update } from "../services/userService";
 import { AuthContext } from "../auth/context/AuthContext";
 import { useDispatch } from "react-redux";
-import { addUser, removeUser, updateUser, loadingUsers, } from "../store/slices/users/usersSlice";
+import { initialUserForm, addUser, removeUser, updateUser, loadingUsers, onUserSelectedForm, onOpenForm, onCloseForm} from "../store/slices/users/usersSlice";
 
-const initialUsers = [];
-
-const initialUserForm = {
-    id: 0,
-    username: '',
-    password: '',
-    email: '',
-    admin: false,
-}
-
-const initialErrors = {
-    username: '',
-    password: '',
-    email: ''
-}
 export const useUsers = () => {
     //en la constante users vamos a guardar la lista de usuarios y la modificamos por medio de dispatch
     //comentamos porque lo llevamos al usersSlice
     //const [users, dispatch] = useReducer (usersReducers, initialUsers);
-    const {users} = useSelector(state => state.users);
+    const {users, userSelected, visibleForm, errors } = useSelector(state => state.users);
     const dispatch = useDispatch();
 
     //uso el userSelected para editar los datos del usuario seleccionado que quiero modificar
-    const [userSelected, setUserSelected] = useState (initialUserForm);
+//    const [userSelected, setUserSelected] = useState (initialUserForm);
 
     //definicmos una nueva variable de estado para manejar si el formulario se debe mostrar o no
-    const [visibleForm, setVisibleForm ] = useState (false);
+//    const [visibleForm, setVisibleForm ] = useState (false);
 
-    const [errors, setErrors] = useState ({initialErrors});
     const navigate = useNavigate ();
     const { login, handlerLogout } = useContext(AuthContext);
 
@@ -141,17 +125,20 @@ export const useUsers = () => {
 
     const handlerUserSelectedForm = (user) => {
         //console.log (user);
-        setUserSelected ({...user });
-        setVisibleForm (true);
+        //setUserSelected ({...user });
+        //setVisibleForm (true);
+        dispatch(onUserSelectedForm({...user}))
     }
 
     const handlerOpenForm = () => {
-        setVisibleForm (true);
+        //setVisibleForm (true);
+        dispatch(onOpenForm());
     }
 
     const handlerCloseForm = () => {
-        setVisibleForm (false);
-        setUserSelected (initialUserForm);
+        //setVisibleForm (false);
+        //setUserSelected (initialUserForm);
+        dispatch(onCloseForm());
         setErrors({});
     }
 

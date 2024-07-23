@@ -64,7 +64,7 @@ export const usersSlice = createSlice ({
             state.visibleForm = false;
             state.userSelected = initialUserForm;
         },
-        loginError: (state, {payload}) => {
+        loadingError: (state, {payload}) => {
             state.errors = payload;
         }
     }
@@ -78,5 +78,5 @@ export const {
     onUserSelectedForm,
     onOpenForm,
     onCloseForm,
-    loginError,
+    loadingError,
 } = usersSlice.actions;

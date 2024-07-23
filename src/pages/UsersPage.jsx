@@ -2,8 +2,8 @@
 import { useContext, useEffect } from "react";
 import { UserModalForm } from "../components/UserModalForm";
 import { UsersList } from "../components/UsersList";
-import { UserContext } from "../context/UserContext";
 import { AuthContext } from "../auth/context/AuthContext";
+import { useUsers } from "../hooks/useUsers";
 
 export const UsersPage = () => {
 
@@ -13,7 +13,7 @@ export const UsersPage = () => {
         
         handlerOpenForm,
         getUsers,
-    } = useContext (UserContext);
+    } = useUsers ();
 
     //para obtener el contexto del login
     const { login } = useContext(AuthContext);

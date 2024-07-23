@@ -1,18 +1,14 @@
-import { useReducer} from 'react';
-import { loginReducer } from '../reducers/loginReducer';
 import Swal from 'sweetalert2';
 import { loginUser } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
-
-const initialLogin = JSON.parse (sessionStorage.getItem ('login')) || {
-    isAuth: false,
-    isAdmin: false,
-    user: undefined,
-}
+import { onLogin, onLogout } from '../../store/slices/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const useAuth = ()  => {
     
-    const [login, dispatch] = useReducer (loginReducer, initialLogin);
+    const dispatch = useDispatch ();
+    const {user, isAdmin, isAuth} = useSelector (state => state.auth);
+    //const [login, dispatch] = useReducer (loginReducer, initialLogin);
     const navigate = useNavigate ();
 
     const handlerLogin = async ({username, password}) => {
@@ -26,10 +22,8 @@ export const useAuth = ()  => {
             console.log (claims);
             //const user = { username: response.data.username}
             const user = { username: claims.sub}
-            dispatch ({
-                type: 'login',
-                payload: {user, isAdmin: claims.isAdmin},
-            });
+            dispatch (onLogin({user, isAdmin: claims.isAdmin}));
+   
             sessionStorage.setItem ('login', JSON.stringify ({
                 isAuth: true,
                 isAdmin: claims.isAdmin,
@@ -51,9 +45,7 @@ export const useAuth = ()  => {
     }
 
     const handlerLogout = () => {
-        dispatch ({
-            type: 'logout',
-        });    
+        dispatch (onLogout());    
         //limpiamos todo lo que hay en el sesionstorage
         sessionStorage.removeItem ('token');
         sessionStorage.removeItem ('login');
@@ -61,7 +53,13 @@ export const useAuth = ()  => {
     }
 
     return {
-        login,
+
+        login: {            
+            user,
+            isAdmin,
+            isAuth,
+        },
+
         handlerLogin,
         handlerLogout,
 

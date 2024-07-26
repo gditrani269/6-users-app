@@ -59,4 +59,11 @@ npx create-next-app --example with-redux my-app
 En el navegador agregar el complemento: Redux devTools
 ----------------------------------------------
 
+para configurar las variables de entorno:
+- en la raiz del proyecto creamos el arvhivo ".env"
+- Ingresamos cada variable de entorno prcedida de la palabra: "VITE", por ej:
+	VITE_API_BASE_URL=http://localhost:8080
+
+- y para usarlas hacemos un import, por ejemplo:
+	console.log (import.meta.env.VITE_API_BASE_URL)
 

@@ -4,7 +4,7 @@ export const loginUser = async ({username, password}) => {
     console.log ("username: ", username);
     console.log ("password: ", password);
     try {
-        return  await axios.post ('http://127.0.0.1:8080/login', {
+        return  await axios.post (`${import.meta.env.VITE_API_BASE_URL}/login`, {
             username,
             password,
         });

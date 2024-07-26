@@ -1,10 +1,9 @@
 import Swal from "sweetalert2";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { findAll, remove, save, update } from "../services/userService";
-import { AuthContext } from "../auth/context/AuthContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { initialUserForm, addUser, removeUser, updateUser, loadingUsers, onUserSelectedForm, onOpenForm, onCloseForm, loadingError} from "../store/slices/users/usersSlice";
+import { useAuth } from "../auth/hooks/useAuth";
 
 export const useUsers = () => {
     //en la constante users vamos a guardar la lista de usuarios y la modificamos por medio de dispatch
@@ -20,7 +19,7 @@ export const useUsers = () => {
 //    const [visibleForm, setVisibleForm ] = useState (false);
 
     const navigate = useNavigate ();
-    const { login, handlerLogout } = useContext(AuthContext);
+    const { login, handlerLogout } = useAuth();
 
     const getUsers = async () => {
         try {

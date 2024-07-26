@@ -58,6 +58,7 @@ npx create-next-app --example with-redux my-app
 
 En el navegador agregar el complemento: Redux devTools
 ----------------------------------------------
+https://vitejs.dev/guide/env-and-mode.html#env-files
 
 para configurar las variables de entorno:
 - en la raiz del proyecto creamos el arvhivo ".env"

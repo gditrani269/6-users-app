@@ -9,7 +9,7 @@ export const useUsers = () => {
     //en la constante users vamos a guardar la lista de usuarios y la modificamos por medio de dispatch
     //comentamos porque lo llevamos al usersSlice
     //const [users, dispatch] = useReducer (usersReducers, initialUsers);
-    const {users, userSelected, visibleForm, errors } = useSelector(state => state.users);
+    const {users, userSelected, visibleForm, errors, isLoading } = useSelector(state => state.users);
     const dispatch = useDispatch();
 
     //uso el userSelected para editar los datos del usuario seleccionado que quiero modificar
@@ -148,6 +148,7 @@ export const useUsers = () => {
         initialUserForm,
         visibleForm,
         errors,
+        isLoading,
 
         handlerAddUser,
         handlerRemoveUser,

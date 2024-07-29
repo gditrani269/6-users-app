@@ -13,6 +13,7 @@ export const UsersPage = () => {
         users,
         visibleForm,
         isLoading,
+        paginator,
         
         handlerOpenForm,
         getUsers,
@@ -60,7 +61,7 @@ export const UsersPage = () => {
                             : 
                             <>
                                 <UsersList />
-                                <Paginator url="/users/page" />
+                                <Paginator url="/users/page" paginator={paginator}/>
                             </>
                         }
                     </div>

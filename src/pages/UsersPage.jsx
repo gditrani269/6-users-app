@@ -4,6 +4,7 @@ import { UsersList } from "../components/UsersList";
 import { useUsers } from "../hooks/useUsers";
 import { useAuth } from "../auth/hooks/useAuth";
 import { useParams } from "react-router-dom";
+import { Paginator } from "../components/Paginator";
 
 export const UsersPage = () => {
 
@@ -55,10 +56,11 @@ export const UsersPage = () => {
                         
                         {/*verifica si hay usuario que mostrar*/}
                         { users.length === 0
-                            ? <div className="alert alert-warning">No hay usuarios ne el sistema!</div>
+                            ? <div className="alert alert-warning">No hay usuarios en el sistema!</div>
                             : 
                             <>
                                 <UsersList />
+                                <Paginator url="/users/page" />
                             </>
                         }
                     </div>

@@ -1,4 +1,4 @@
-import { useUsers } from "../hooks/useUsers"
+import { Link } from "react-router-dom"
 
 export const Paginator = () => {
 

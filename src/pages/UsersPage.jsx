@@ -3,9 +3,11 @@ import { UserModalForm } from "../components/UserModalForm";
 import { UsersList } from "../components/UsersList";
 import { useUsers } from "../hooks/useUsers";
 import { useAuth } from "../auth/hooks/useAuth";
+import { useParams } from "react-router-dom";
 
 export const UsersPage = () => {
 
+    const {page} = useParams();
     const {
         users,
         visibleForm,
@@ -19,8 +21,8 @@ export const UsersPage = () => {
     const { login } = useAuth();
 
     useEffect (() => {
-        getUsers ();
-    }, []);
+        getUsers (page);
+    }, [, page]);
     
     if (isLoading) {
         return (
@@ -54,7 +56,11 @@ export const UsersPage = () => {
                         {/*verifica si hay usuario que mostrar*/}
                         { users.length === 0
                             ? <div className="alert alert-warning">No hay usuarios ne el sistema!</div>
-                            : <UsersList />}
+                            : 
+                            <>
+                                <UsersList />
+                            </>
+                        }
                     </div>
                 </div>
             </div>

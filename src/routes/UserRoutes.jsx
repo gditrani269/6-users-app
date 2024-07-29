@@ -13,6 +13,8 @@ export const UserRoutes = () => {
             <NavBar />
             <Routes>
                 <Route path="users" element={<UsersPage />} />
+                <Route path="users/pages/:page" element={<UsersPage />} />
+
                 {!isAdmin || <>
                     <Route path="users/register" element={<RegisterPage />} />
                     <Route path="users/edit/:id" element={<RegisterPage  />} />

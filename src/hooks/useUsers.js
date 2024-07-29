@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { findAll, remove, save, update } from "../services/userService";
+import { findAllPages, remove, save, update } from "../services/userService";
 import { useDispatch, useSelector } from "react-redux";
 import { initialUserForm, addUser, removeUser, updateUser, loadingUsers, onUserSelectedForm, onOpenForm, onCloseForm, loadingError} from "../store/slices/users/usersSlice";
 import { useAuth } from "../auth/hooks/useAuth";
@@ -9,7 +9,7 @@ export const useUsers = () => {
     //en la constante users vamos a guardar la lista de usuarios y la modificamos por medio de dispatch
     //comentamos porque lo llevamos al usersSlice
     //const [users, dispatch] = useReducer (usersReducers, initialUsers);
-    const {users, userSelected, visibleForm, errors, isLoading } = useSelector(state => state.users);
+    const {users, userSelected, visibleForm, errors, isLoading, paginator } = useSelector(state => state.users);
     const dispatch = useDispatch();
 
     //uso el userSelected para editar los datos del usuario seleccionado que quiero modificar
@@ -21,10 +21,9 @@ export const useUsers = () => {
     const navigate = useNavigate ();
     const { login, handlerLogout } = useAuth();
 
-    const getUsers = async () => {
+    const getUsers = async (page = 0) => {
         try {
-                const result = await findAll ();
-                console.log(result);
+                const result = await findAllPages (page);
                 dispatch ( loadingUsers (result.data));
         } catch (error) {
             if (error.response?.status == 401) {
@@ -149,6 +148,7 @@ export const useUsers = () => {
         visibleForm,
         errors,
         isLoading,
+        paginator,
 
         handlerAddUser,
         handlerRemoveUser,

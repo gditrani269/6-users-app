@@ -22,6 +22,16 @@ export const findAll = async () => {
     }
 }
 
+export const findAllPages = async (page = 0) => {
+    try {
+        const response = await usersApi.get (`${BASE_URL}/page/${page}`);
+        return response;
+    } catch {
+        console.log (error);
+        throw error;
+    }
+}
+
 export const save = async ({username, email, password, admin}) => {
     try {
         return await usersApi.post (BASE_URL, {
